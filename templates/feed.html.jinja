@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<h1> Post Feed</h1>
+{% for in post in posts%}
+<div>
+    <img src="{{post['post_image']}}">
+    <p>{{post["post_text"]}}</p>
+    </div>
+{%endfor%}
+</body>
+</html>
