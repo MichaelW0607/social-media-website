@@ -4,11 +4,14 @@
 </head>
 <body>
 <h1> Post Feed</h1>
-{% for in post in posts%}
+<a href="/sign_in">Sign Out</a>
+{% for post in posts%}
 <div>
     <img src="{{post['post_image']}}">
     <p>{{post["post_text"]}}</p>
     </div>
 {%endfor%}
+<main class="container">
+<h1> Hi {{current_user.username}}</h1>
 </body>
 </html>
