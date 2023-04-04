@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1> Post Feed</h1>
-<a href="/sign_in">Sign Out</a>
+<a href="/sign_out">Sign Out</a>
 {% for post in posts%}
 <div>
     <img src="{{post['post_image']}}">
@@ -13,5 +13,11 @@
 {%endfor%}
 <main class="container">
 <h1> Hi {{current_user.username}}</h1>
+<form method="POST" action="/feed"> 
+<label>Post:</label>
+<div><textarea></textarea></div>
+ <input type="file" id="myFile" name="filename">
+  <input type="submit">
+</form>
 </body>
 </html>
