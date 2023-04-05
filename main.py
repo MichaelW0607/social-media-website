@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 from flask_login import LoginManager,login_required,login_user, current_user,logout_user
 import pymysql
 import pymysql.cursors 
@@ -131,6 +131,9 @@ connection = pymysql.connect(
     cursorclass=pymysql.cursors.DictCursor,
     autocommit=True
 )
+@app.get("/media/<path:path>")
+def send_media(path):
+    return send_from_directory("media",path)
 
 
 if __name__ =="__main__": 

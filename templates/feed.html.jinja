@@ -7,7 +7,7 @@
 <a href="/sign_out">Sign Out</a>
 {% for post in posts%}
 <div>
-    <img src="{{post['post_image']}}">
+    <img src="/media/posts/{{post['post_image']}}">
     <p>{{post["post_text"]}}</p>
     </div>
 {%endfor%}
