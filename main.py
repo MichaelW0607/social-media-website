@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, abort, Blueprint
 from flask_login import LoginManager,login_required,login_user, current_user,logout_user
 import pymysql
 import pymysql.cursors 
+
+errors = Blueprint("errors",__name__)
 
 login_manager =LoginManager()
 
@@ -21,6 +23,18 @@ class User:
     def get_id(self):
         return str(self.id)
    
+    @errors.app_errorhandler(404)
+    def error_404(error):
+        return render_template("errors/404.html", 404)
+    
+    @errors.app_errorhandler(404)
+    def error_404(error):
+        return render_template("errors/404.html", 404)
+    
+    @errors.app_errorhandler(404)
+    def error_404(error):
+        return render_template("errors/404.html", 404)
+
     @login_manager.user_loader
     def user_loader(user_id):
         cursor = connection.cursor()
@@ -138,15 +152,17 @@ def send_media(path):
 
 @app.route("/profile/<username>")
 def user_profile(username):
-   cursor = connection.cursor()
-   cursor.execute("SELECT * FROM `users` WHERE `username` = %s",(username))
-   result = cursor.fetchone()
-   return render_template("user_profile.html.jinja", user=result)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM `users` WHERE `username` = %s",(username))
+    result = cursor.fetchone()
+    if result is None:
+       abort(404)
+    cursor.close()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * from `posts` WHERE `user_id` = %s", (result["id"]))
+    post_result = cursor.fetchall()
+    return render_template("user_profile.html.jinja", user=result, post=post_result)
    
-
-
-
-
 
 if __name__ =="__main__": 
     app.run(debug=True)
