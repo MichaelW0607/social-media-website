@@ -23,26 +23,18 @@ class User:
     def get_id(self):
         return str(self.id)
    
-    @errors.app_errorhandler(404)
-    def error_404(error):
-        return render_template("errors/404.html", 404)
-    
-    @errors.app_errorhandler(404)
-    def error_404(error):
-        return render_template("errors/404.html", 404)
-    
-    @errors.app_errorhandler(404)
-    def error_404(error):
-        return render_template("errors/404.html", 404)
+@errors.app_errorhandler(404)
+def error_404(error):
+    return render_template("errors/404.html", 404)
 
-    @login_manager.user_loader
-    def user_loader(user_id):
-        cursor = connection.cursor()
-        cursor.execute("SELECT * from `users` WHERE `id` =" + user_id) 
-        result = cursor.fetchone()
-        if result is None:
-            return None
-        return User(result["id"], result["username"], result["banned"])
+@login_manager.user_loader
+def user_loader(user_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * from `users` WHERE `id` =" + user_id) 
+    result = cursor.fetchone()
+    if result is None:
+        return None
+    return User(result["id"], result["username"], result["banned"])
 
 @app.route("/")
 def index():
@@ -61,27 +53,30 @@ def post_feed():
   posts=results
   )
 
-@app.route("/post",methods=["POST"])
+@app.route('/post', methods=['POST'])
 @login_required
 def create_post():
-   cursor = connection.cursor()
-   if request.method == "POST":
-       cursor = connection.cursor()
-       
-       profile = request.files["photo"]
-       file_name = profile.filename
-       file_extension = file_name.split(".")[-1]
-       if file_extension in ["jpg","jpeg","png","gif"]:
-           profile.save("media/posts/"+ file_name)
-       else:
-           raise Exception("Invalid file type")
+    cursor = connection.cursor()
 
-   
-   user_id = current_user.id
-   cursor.execute("INSERT INTO `posts`(`post_text`,`post_image`,`user_id`)")
-   
+    photo = request.files['post_image']
 
-   return redirect("/feed")
+    file_name = photo.filename # my_photo.jpg
+
+    file_extension = file_name.split('.')[-1]
+
+    if file_extension.lower() in ['jpg', 'jpeg', 'png', 'gif']:
+        photo.save('media/posts/' + file_name)
+    else:
+        raise Exception('Invalid file type')
+
+    user_id = current_user.id
+
+    cursor.execute(
+        "INSERT INTO `posts` (`post_text`, `post_image`, `user_id`) VALUES (%s, %s, %s)", 
+        (request.form['post_text'], file_name, user_id)
+    )
+
+    return redirect('/feed')
 
 @app.route("/sign-out")
 def sign_out():
