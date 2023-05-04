@@ -45,7 +45,7 @@ def index():
 def post_feed():
     cursor = get_db().cursor()
     
-    cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp`")
+    cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp` DESC")
 
     results = cursor.fetchall()
 

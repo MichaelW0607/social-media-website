@@ -5,12 +5,7 @@
 <body>
 <h1> Post Feed</h1>
 <a href="/sign-out">Sign Out</a>
-{% for post in posts%}
-<div>
-    <img src="/media/posts/{{post['post_image']}}">
-    <p>{{post["post_text"]}}</p>
-    </div>
-{%endfor%}
+
 <main class="container">
 <h1> Hi {{current_user.username}}</h1>
 <form method="POST" action="/post" enctype="multipart/form-data"> 
@@ -19,5 +14,11 @@
  <input type="file" id="myFile" name="photo">
   <input type="submit">
 </form>
+{% for post in posts%}
+<div>
+    <img src="/media/posts/{{post['post_image']}}">
+    <p>{{post["post_text"]}}</p>
+    </div>
+{%endfor%}
 </body>
 </html>
