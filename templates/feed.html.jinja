@@ -15,7 +15,7 @@
 <h1> Hi {{current_user.username}}</h1>
 <form method="POST" action="/post" enctype="multipart/form-data"> 
 <label>Post:</label>
-<div><textarea></textarea></div>
+<div><textarea name='post_text'></textarea></div>
  <input type="file" id="myFile" name="photo">
   <input type="submit">
 </form>
