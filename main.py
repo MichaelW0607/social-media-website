@@ -3,8 +3,6 @@ from flask_login import LoginManager,login_required,login_user, current_user,log
 import pymysql
 import pymysql.cursors 
 
-errors = Blueprint("errors",__name__)
-
 login_manager =LoginManager()
 
 
@@ -23,9 +21,9 @@ class User:
     def get_id(self):
         return str(self.id)
    
-@errors.app_errorhandler(404)
+@app.errorhandler(404)
 def error_404(error):
-    return render_template("errors/404.html", 404)
+    return render_template("404.html.jinja"), 404
 
 @login_manager.user_loader
 def user_loader(user_id):
