@@ -21,7 +21,7 @@ p    {color: red;}
 {% for post in posts%}
 <div>
     <img src="/media/posts/{{post['post_image']}}">
-    <p>{{post["post_text"]}}</p>
+    <p>{{post["post_text"] | escape }}</p>
     </div>
 {%endfor%}
 </body>
