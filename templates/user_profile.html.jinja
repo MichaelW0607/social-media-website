@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head></head>
-<body> <h1>{{user.display_name}}</h1>
-<p>{{user.bio}}</p>
+<body> <h1>{{user.display_name | escape }}</h1>
+<p>{{user.bio | escape }}</p>
 <img src="/profile/john_bravo/{{post['post_image']}}">
 </body>
 </html>
